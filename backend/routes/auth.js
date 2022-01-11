@@ -78,6 +78,7 @@ router.post('/login', [
 
    //check validation and is there is empty throw errors and bad request
    const errors = validationResult(req);
+   let success = false;
    if (!errors.isEmpty()) {
      return res.status(400).json({ errors: errors.array() });
    }
@@ -85,12 +86,14 @@ router.post('/login', [
     // try {
         let user = await User.findOne({email:req.body.email})
         if (!user) {
-            res.status(500).json({Error: "Please Login with Valid Credentials"})
+            success = false
+            res.status(500).json({success,Error: "Please Login with Valid Credentials"})
         }
 
         const passwordMatch = await bcrypt.compare(password, user.password);
         if (!passwordMatch){
-            res.status(500).json({Error: "Please Login with Valid Credentials"})
+            success = false
+            res.status(500).json({success, Error: "Please Login with Valid Credentials"})
         }
 
         const payloadData = {
@@ -100,7 +103,8 @@ router.post('/login', [
         }
         const JWT_Signature = "Shahr$u$kh";
         const Token = await jwt.sign(payloadData, JWT_Signature)
-        res.json({Message: "Request Submitted Successfully",Token})
+        success = true;
+        res.json({success,Message: "Request Submitted Successfully",Token})
 
     })
         //ROUTE: 3 Get a User using: POST "/api/auth/", Login Required

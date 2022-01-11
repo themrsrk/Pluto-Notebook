@@ -70,42 +70,13 @@ function NotesState(props) {
         const newNote = notes.filter((note) => { return note._id !== id })
         setNotes(newNote)
     }
-    //Edit note Function
-    // const editNote = async (id, description, title, tag) => {
-    //     // API Call 
-    //     const response = await fetch(`${host}api/notes/updatenote/${id}`, {
-    //         method: 'PUT',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             "Token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjE3Njk2ZTNiZGE4M2IwZmQwNjg5OGIxIn0sImlhdCI6MTYzNTE2NzQ4MH0.KMS4F0OjWglMZ2Rhhkgz6VwOv6f148REAzIUolPxBZ0"
-    //         },
-    //         body: JSON.stringify({ title, description, tag })
-    //     });
-    //     // 
-    //     const json = response.json()
-    //     console.log(json)
+   
 
-    //     let newNotes = JSON.parse(JSON.stringify(notes))
-    //     // Logic to edit in client
-    //     for (let index = 0; index < newNotes.length; index++) {
-    //         const element = newNotes[index];
-    //         if (element._id === id) {
-    //             notes[index].title = title;
-    //             notes[index].description = description;
-    //             notes[index].tag = tag;
-    //             break;
-    //         }
-            
-    //     }
-    //         console.log(notes)
-    //         setNotes(newNotes)
-           
-    // }
 
-    const editNote = async (id, title, description, tag) => {
+
+      const editNote = async (id, title, description, tag) => {
         // API Call 
         const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
-        //   method: 'POST',
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -129,16 +100,9 @@ function NotesState(props) {
           }
     
         }
+        // console.log(id);
         setNotes(newNotes);
       }
-    // const update =()=>{
-    //     setTimeout(() => {
-    //         setstate({
-    //             "name":"Sharjeel",
-    //             "dept":"Electronics Engineering"
-    //         })
-    //     }, 1000);
-    // }
     return (
         <div>
             <NoteContext.Provider value={{ notes, editNote, addNote, deleteNote, getNotes }}>
