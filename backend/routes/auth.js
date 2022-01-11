@@ -16,6 +16,7 @@ router.post('/createuser', [
   body('password', "Password should be 8 characters long").isLength({ min: 8 }),
   
 ], async (req, res)=>{ 
+    let success = false;
     // console.log(req.body)
     // const user = User(req.body);
     // user.save()
@@ -23,7 +24,7 @@ router.post('/createuser', [
     //check validation and is there is empty throw errors and bad request
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({success, errors: errors.array() });
     }
     // res.send(req.body);
     try{
@@ -48,8 +49,8 @@ router.post('/createuser', [
           }
       }
       const Token = jwt.sign(data, JWT_Signature)
-
-      res.json({Message: "Request Submitted Successfully",Token})
+      success = true;
+      res.json({success,Message: "Request Submitted Successfully",Token})
     }
     catch{
         console.log(err)
